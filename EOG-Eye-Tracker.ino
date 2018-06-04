@@ -4,6 +4,7 @@
 #include <Keyboard.h>
 #include <CircularBuffer.h>
 #include <SimpleTimer.h>
+#include "main.h"
 
 
 #define SAMPLERATE   200                // Frecventa de esantionare semnal / canal
@@ -193,7 +194,7 @@ void readADC_values() {
 
     Xcheck(x_mean_filt);
     Ycheck(y_mean_filt); 
-    
+    EyeBlink(y_mean_filt);
      
    /* Serial.print(0);
     Serial.print(",");
