@@ -13,8 +13,8 @@
 
 #define XTH_LIMIT_PLUS 60               // Limitele de variatie a pragurilor
 #define XTH_LIMIT_MINUS 60
-#define YTH_LIMIT_PLUS 25
-#define YTH_LIMIT_MINUS 25
+#define YTH_LIMIT_PLUS 60
+#define YTH_LIMIT_MINUS 60
  
 
 unsigned int x_threshold_up = 0;        // Praguri detectie comparatoare
@@ -168,6 +168,10 @@ void readADC_values() {
     for(int i = 0; i < SAMPLERATE; i++)
       xdc_comp += x_sampleBuf[i];
     xdc_comp = xdc_comp / SAMPLERATE;
+    
+    for(int i = 0; i < SAMPLERATE; i++)
+      ydc_comp += y_sampleBuf[i];
+    ydc_comp = ydc_comp / SAMPLERATE;
 
     x_threshold_up = xdc_comp + XTH_LIMIT_PLUS;   // Recalculare praguri detectie comparatoare
     x_threshold_dn = xdc_comp - XTH_LIMIT_MINUS;       
@@ -191,7 +195,7 @@ void readADC_values() {
     Ycheck(y_mean_filt); 
     
      
-    Serial.print(0);
+   /* Serial.print(0);
     Serial.print(",");
     Serial.print(1023);
     Serial.print(",");
@@ -199,7 +203,7 @@ void readADC_values() {
     Serial.print(",");
     Serial.print(y_threshold_dn);
     Serial.print(",");
-    Serial.println(y_mean_filt);
+    Serial.println(y_mean_filt);*/
 
    
 }
