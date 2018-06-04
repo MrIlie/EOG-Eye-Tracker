@@ -55,7 +55,8 @@ unsigned char y_stare = 0;
 
 int _timer = 0;
 int reset_duration = 0;
-
+int last_x_average = 0;               // Ultima valoare medie de pe axa x
+int last_y_average = 0;               // Ultima valoare medie de pe axa y
 void setup() {
 
   Serial.begin(9600);
@@ -80,24 +81,25 @@ void Xcheck(int xValue)
 {
   
    //set starea s1
-   if( xValue > x_threshold_up && !x_stare)
+   if( last_x_average < x_threshold_up && xValue > x_threshold_up && !x_stare)
    {
       x_stare = 1;
       Serial.println("right");
- //   Keyboard.press(KEY_RIGHT_ARROW);
-    //Keyboard.press('d');
-//    Keyboard.releaseAll();
+      //Keyboard.press(KEY_RIGHT_ARROW);
+      //Keyboard.press('d');
+      //Keyboard.releaseAll();
       
    }
 
    //set starea s2
-   if( xValue < x_threshold_dn && !x_stare)
+   if( last_x_average > x_threshold_dn && xValue < x_threshold_dn && !x_stare)
    {
       x_stare = 2;
       Serial.println("left");
- //   Keyboard.press(KEY_RIGHT_ARROW);
-    //Keyboard.press('d');
-//    Keyboard.releaseAll();
+      
+      //Keyboard.press(KEY_RIGHT_ARROW);
+      //Keyboard.press('d');
+      //Keyboard.releaseAll();
       
    }
   
@@ -107,7 +109,8 @@ void Xcheck(int xValue)
    {
       x_stare = 0;
    }
-  
+
+   last_x_average = xValue;
   
 }  
   
@@ -115,13 +118,45 @@ void Xcheck(int xValue)
 void Ycheck(int yValue)
 {
   
+   //set starea s1
+   if( last_y_average < y_threshold_up && yValue > y_threshold_up && !y_stare)
+   {
+      y_stare = 1;
+      Serial.println("up");
+      //Keyboard.press(KEY_RIGHT_ARROW);
+      //Keyboard.press('d');
+      //Keyboard.releaseAll();
+      
+   }
+
+   //set starea s2
+   if( last_y_average > y_threshold_dn && yValue < y_threshold_dn && !y_stare)
+   {
+      y_stare = 2;
+      Serial.println("down");
+      
+      //Keyboard.press(KEY_RIGHT_ARROW);
+      //Keyboard.press('d');
+      //Keyboard.releaseAll();
+      
+   }
+  
+   //reset in starea s0
+   if(( yValue <= y_threshold_dn && y_stare == 1) || 
+   ( yValue >= y_threshold_up && y_stare == 2))
+   {
+      y_stare = 0;
+   }
+
+   last_y_average = yValue;
+    
 }
  
 
 void readADC_values() {
   
     analog_xValue = analogRead(A5);
-    analog_yValue = analogRead(A6);
+    analog_yValue = analogRead(A4);
     
     x_sampleBuf.shift();                          // Eliminam din buffer prima valoare
     x_sampleBuf.push(analog_xValue);              // Adaugam in buffer pe ultima pozitie
@@ -156,15 +191,15 @@ void readADC_values() {
     Ycheck(y_mean_filt); 
     
      
-    /*Serial.print(0);
+    Serial.print(0);
     Serial.print(",");
     Serial.print(1023);
     Serial.print(",");
-    Serial.print(x_threshold_up);
+    Serial.print(y_threshold_up);
     Serial.print(",");
-    Serial.print(x_threshold_dn);
+    Serial.print(y_threshold_dn);
     Serial.print(",");
-    Serial.println(x_mean_filt);*/
+    Serial.println(y_mean_filt);
 
    
 }
