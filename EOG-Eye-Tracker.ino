@@ -7,17 +7,6 @@
 #include "main.h"
 
 
-#define SAMPLERATE   200                // Frecventa de esantionare semnal / canal
-#define READINGS     20                 // Interval pt calculul mediei semnalului   
-#define INACTIVE_CMD 20                 // Interval inactivare comanda noua t = 0.1sec
-#define READING_INT  5                  // Durata in ms intre esantionari succesive 
-
-#define XTH_LIMIT_PLUS 60               // Limitele de variatie a pragurilor
-#define XTH_LIMIT_MINUS 60
-#define YTH_LIMIT_PLUS 60
-#define YTH_LIMIT_MINUS 60
- 
-
 unsigned int x_threshold_up = 0;        // Praguri detectie comparatoare
 unsigned int x_threshold_dn = 0; 
 unsigned int y_threshold_up = 0; 
@@ -77,6 +66,7 @@ void setup() {
   read_data.setInterval(READING_INT,readADC_values);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////a = 19;
 
 void Xcheck(int xValue)
 {
