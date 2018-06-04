@@ -11,10 +11,10 @@
 #define INACTIVE_CMD 20                 // Interval inactivare comanda noua t = 0.1sec
 #define READING_INT  5                  // Durata in ms intre esantionari succesive 
 
-#define XTH_LIMIT_PLUS 15/100           // Limitele de variatie a pragurilor
-#define XTH_LIMIT_MINUS 15/100
-#define YTH_LIMIT_PLUS 15/100
-#define YTH_LIMIT_MINUS 15/100
+#define XTH_LIMIT_PLUS 60               // Limitele de variatie a pragurilor
+#define XTH_LIMIT_MINUS 60
+#define YTH_LIMIT_PLUS 25
+#define YTH_LIMIT_MINUS 25
  
 
 unsigned int x_threshold_up = 0;        // Praguri detectie comparatoare
@@ -134,10 +134,10 @@ void readADC_values() {
       xdc_comp += x_sampleBuf[i];
     xdc_comp = xdc_comp / SAMPLERATE;
 
-    x_threshold_up = xdc_comp + 25;//(xdc_comp * XTH_LIMIT_PLUS);    // Recalculare praguri detectie comparatoare
-    x_threshold_dn = xdc_comp - 25;//(xdc_comp * XTH_LIMIT_MINUS);       
-    y_threshold_up = ydc_comp + 25;//(ydc_comp * YTH_LIMIT_PLUS);        
-    y_threshold_dn = ydc_comp - 25;//(ydc_comp * YTH_LIMIT_MINUS);       
+    x_threshold_up = xdc_comp + XTH_LIMIT_PLUS;   // Recalculare praguri detectie comparatoare
+    x_threshold_dn = xdc_comp - XTH_LIMIT_MINUS;       
+    y_threshold_up = ydc_comp + YTH_LIMIT_PLUS;        
+    y_threshold_dn = ydc_comp - YTH_LIMIT_MINUS;      
     
 
     x_last_mean_filt = x_mean_filt;               // Salvare ultima valoare filtru medie 
@@ -156,7 +156,7 @@ void readADC_values() {
     Ycheck(y_mean_filt); 
     
      
-    Serial.print(0);
+    /*Serial.print(0);
     Serial.print(",");
     Serial.print(1023);
     Serial.print(",");
@@ -164,7 +164,7 @@ void readADC_values() {
     Serial.print(",");
     Serial.print(x_threshold_dn);
     Serial.print(",");
-    Serial.println(x_mean_filt);
+    Serial.println(x_mean_filt);*/
 
    
 }
