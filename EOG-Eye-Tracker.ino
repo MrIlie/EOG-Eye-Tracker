@@ -4,7 +4,6 @@
 #include <Keyboard.h>
 #include <CircularBuffer.h>
 #include <SimpleTimer.h>
-#include "main.h"
 
 
 #define SAMPLERATE   200                // Frecventa de esantionare semnal / canal
@@ -61,7 +60,8 @@ int last_y_average = 0;               // Ultima valoare medie de pe axa y
 void setup() {
 
   Serial.begin(9600);
- // Keyboard.begin();
+  delay(10000);                       //Preventiv
+  Keyboard.begin();
   for(int i = 0; i < SAMPLERATE; i++)
   {
     x_sampleBuf.push(512);
@@ -87,9 +87,9 @@ void Xcheck(int xValue)
    {
       x_stare = 1;
       Serial.println("right");
-      //Keyboard.press(KEY_RIGHT_ARROW);
+      Keyboard.press(KEY_RIGHT_ARROW);
       //Keyboard.press('d');
-      //Keyboard.releaseAll();
+      Keyboard.releaseAll();
       
    }
 
@@ -99,9 +99,9 @@ void Xcheck(int xValue)
       x_stare = 2;
       Serial.println("left");
       
-      //Keyboard.press(KEY_RIGHT_ARROW);
+      Keyboard.press(KEY_RIGHT_ARROW);
       //Keyboard.press('d');
-      //Keyboard.releaseAll();
+      Keyboard.releaseAll();
       
    }
   
@@ -125,7 +125,7 @@ void Ycheck(int yValue)
    {
       y_stare = 1;
       Serial.println("up");
-      //Keyboard.press(KEY_RIGHT_ARROW);
+      //Keyboard.press(KEY_UP_ARROW);
       //Keyboard.press('d');
       //Keyboard.releaseAll();
       
@@ -137,7 +137,7 @@ void Ycheck(int yValue)
       y_stare = 2;
       Serial.println("down");
       
-      //Keyboard.press(KEY_RIGHT_ARROW);
+      //Keyboard.press(KEY_DOWN_ARROW);
       //Keyboard.press('d');
       //Keyboard.releaseAll();
       
@@ -195,7 +195,7 @@ void readADC_values() {
 
     Xcheck(x_mean_filt);
     Ycheck(y_mean_filt); 
-    EyeBlink(y_mean_filt);
+    //EyeBlink(y_mean_filt);
      
    /* Serial.print(0);
     Serial.print(",");
